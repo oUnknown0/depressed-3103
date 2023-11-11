@@ -20,7 +20,7 @@ pipeline {
             steps {
                 dependencyCheck additionalArguments: ''' 
                             -o './'
-                            -s './'
+                            -s './setup-jenkins'
                             -f 'ALL' 
                             --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
                 
