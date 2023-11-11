@@ -1,27 +1,24 @@
 pipeline {
-    agent {
-        label 'Runner' // Specify the label of the agent you want to use
-    }
+    agent any
     options {
         timeout(time:30, unit: 'MINUTES')
     }
-    environment {
-        
-    }
-    stage('Echo Hello') {
-        steps {
-            echo "Hello"
+    stages {
+        stage('Check Current Directory') {
+            steps {
+                sh "ls -la"
+            }
         }
-    }
-    stage('OWASP Dependency-Check Vulnerabilities') {
-        steps {
-            dependencyCheck additionalArguments: ''' 
-                        -o './'
-                        -s './'
-                        -f 'ALL' 
-                        --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
-            
-            dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+        stage('OWASP Dependency-Check Vulnerabilities') {
+            steps {
+                dependencyCheck additionalArguments: ''' 
+                            -o './'
+                            -s './'
+                            -f 'ALL' 
+                            --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
+                
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+            }
         }
     }
 }
