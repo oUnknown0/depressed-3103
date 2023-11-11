@@ -14,7 +14,8 @@ services:
     build:
       context: . # This sets the build context to the current directory
       dockerfile: Dockerfile # Assuming your Dockerfile is named 'Dockerfile' in the root
-    image: jenkins/jenkins:lts
+    privileged: true
+    user: root
     environment:
       - JENKINS_ARGS=--prefix=/jenkins
     volumes:
