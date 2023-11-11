@@ -48,6 +48,7 @@ pipeline {
                         -Dsonar.host.url=http://your-sonarqube-server-url \
                         -Dsonar.login=sqp_396c1e5ef4502deef8beebf5ccab9963f14b1361
                         """
+                    }
                 }
             }
         }
