@@ -16,6 +16,7 @@ pipeline {
                 sh "ls -la"
             }
         }
+
         stage('OWASP Dependency-Check Vulnerabilities') {
             steps {
                 dependencyCheck additionalArguments: ''' 
@@ -27,5 +28,16 @@ pipeline {
                 dependencyCheckPublisher pattern: 'dependency-check-report.xml'
             }
         }
-    }
+        
+        stage('Build, start docker and kill images'){
+            steps {
+                sh "docker --version"
+                sh "docker --version"
+                sh "docker-compose build"
+                sh "docker-compose up"
+                sh "docker ps"
+                sh "docker-compose down"
+            }
+        }
+    } 
 }
