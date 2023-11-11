@@ -35,7 +35,7 @@ pipeline {
                 sh "docker --version"
                 sh "docker --version"
                 sh "docker-compose -f setup-jenkins/docker-compose.yml build"
-                sh "docker-compose -f setup-jenkins/docker-compose.yml up"
+                sh "docker-compose -f setup-jenkins/docker-compose.yml up -d"
                 sh "docker ps"
                 sh "docker-compose down"
             }
