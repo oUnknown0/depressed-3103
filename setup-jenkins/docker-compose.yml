@@ -12,8 +12,8 @@ services:
 
   jenkins:
     build:
-      context: . # This sets the build context to the current directory
-      dockerfile: Dockerfile # Assuming your Dockerfile is named 'Dockerfile' in the root
+      context: . 
+      dockerfile: Dockerfile 
     privileged: true
     user: root
     environment:
@@ -23,8 +23,33 @@ services:
     networks:
       - reverse-proxy
 
+  sonarqube:
+    image: sonarqube:latest
+    environment:
+      - SONARQUBE_JDBC_URL=jdbc:postgresql://db:5432/sonar
+      - SONARQUBE_JDBC_USERNAME=sonar
+      - SONARQUBE_JDBC_PASSWORD=sonar
+    ports:
+      - "9000:9000"
+    networks:
+      - reverse-proxy
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonar
+      - POSTGRES_DB=sonar
+    volumes:
+      - "postgresql:/var/lib/postgresql/data"
+    networks:
+      - reverse-proxy
+
 volumes:
   jenkins_home:
+  postgresql:
 
 networks:
   reverse-proxy:

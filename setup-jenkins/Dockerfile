@@ -17,3 +17,4 @@ RUN curl -L "https://github.com/docker/compose/releases/download/v2.5.0/docker-c
 USER jenkins
 RUN jenkins-plugin-cli --plugins "blueocean docker-workflow"
 RUN jenkins-plugin-cli --plugins "dependency-check-jenkins-plugin:5.4.3"
+RUN jenkins-plugin-cli --plugins "sonar:2.16.1"
