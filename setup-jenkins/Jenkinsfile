@@ -3,6 +3,9 @@ pipeline {
     options {
         timeout(time:30, unit: 'MINUTES')
     }
+    environment {
+        scannerHome = tool 'SonarQube'
+    }
     stages {
         stage('Checkout repository') {
             steps {
@@ -31,23 +34,27 @@ pipeline {
 
         stage('Code Quality Check via SonarQube') {
             steps {
-                script {
-                    def scannerHome = tool 'SonarQube';
-                        withSonarQubeEnv('SonarQube') {
-                            sh "sonar-scanner \
-                            -Dsonar.projectKey=OWASP \
-                            -Dsonar.sources=. \
-                            -Dsonar.host.url=http://localhost:9000 \
-                            -Dsonar.token=sqp_396c1e5ef4502deef8beebf5ccab9963f14b1361"
-                        }
-                }    
+                 script {
+                    // Define SonarQube Scanner
+                    def sonarScannerHome = tool 'SonarQube';
+                    env.PATH = "${sonarScannerHome}/bin:${env.PATH}"
+
+                    // Execute SonarQube analysis
+                    withSonarQubeEnv('SonarQube') {
+                        sh """
+                        sonar-scanner \
+                        -Dsonar.projectKey=OWASP \
+                        -Dsonar.sources=. \
+                        -Dsonar.host.url=http://your-sonarqube-server-url \
+                        -Dsonar.login=sqp_396c1e5ef4502deef8beebf5ccab9963f14b1361
+                        """
+                }
             }
         }
 
         stage('Build, start docker and kill images'){
             steps {
                 sh "dockerd &"
-                sh "docker --version"
                 sh "docker --version"
                 sh "docker-compose -f setup-jenkins/docker-compose.yml down"
                 sh "docker-compose -f setup-jenkins/docker-compose.yml build"
@@ -57,11 +64,6 @@ pipeline {
             }
         }
     } 
-    post {
-        always {
-            recordIssues enabledForFailure: true, tool:sonarQube()
-        }
-    }
 }
 
 
