@@ -1,0 +1,30 @@
+version: "3.1"
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - reverse-proxy
+
+  jenkins:
+    build:
+      context: . # This sets the build context to the current directory
+      dockerfile: Dockerfile # Assuming your Dockerfile is named 'Dockerfile' in the root
+    image: jenkins/jenkins:lts
+    environment:
+      - JENKINS_ARGS=--prefix=/jenkins
+    volumes:
+      - "jenkins_home:/var/jenkins_home"
+    networks:
+      - reverse-proxy
+
+volumes:
+  jenkins_home:
+
+networks:
+  reverse-proxy:
+    driver: bridge

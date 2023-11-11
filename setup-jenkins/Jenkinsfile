@@ -1,0 +1,27 @@
+pipeline {
+    agent {
+        label 'Runner' // Specify the label of the agent you want to use
+    }
+    options {
+        timeout(time:30, unit: 'MINUTES')
+    }
+    environment {
+        
+    }
+    stage('Echo Hello') {
+        steps {
+            echo "Hello"
+        }
+    }
+    stage('OWASP Dependency-Check Vulnerabilities') {
+        steps {
+            dependencyCheck additionalArguments: ''' 
+                        -o './'
+                        -s './'
+                        -f 'ALL' 
+                        --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
+            
+            dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+        }
+    }
+}
