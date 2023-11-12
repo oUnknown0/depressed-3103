@@ -9,7 +9,6 @@ pipeline {
     stages {
         stage('Checkout repository') {
             steps {
-                sh 'git config --global lfs.skipSmudge true'
                 echo "Entering 'Checkout repository' stage"
                 checkout scm
                 echo "Completed 'Checkout repository' stage"
