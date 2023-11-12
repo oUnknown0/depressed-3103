@@ -9,13 +9,13 @@ pipeline {
     stages {
         stage('Checkout repository') {
             steps {
-                sh 'git lfs install'
+                sh 'git config --global lfs.skipSmudge true'
                 echo "Entering 'Checkout repository' stage"
                 checkout scm
                 echo "Completed 'Checkout repository' stage"
             }
         }
-        
+
         stage('Check Current Directory') {
             steps {
                 sh "ls -la"
