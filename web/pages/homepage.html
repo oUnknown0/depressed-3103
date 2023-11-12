@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your HTML App</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h1>Hello, HTML App! I am here.</h1>
+
+    <form id="myForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+
+        <button type="button" onclick="validateAndSubmit()">Submit</button>
+    </form>
+
+    <script src="script/script.js"></script>
+    <script>
+        function validateAndSubmit() {
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var message = document.getElementById("message").value;
+
+            // Simple validation
+            if (name.trim() === "" || email.trim() === "" || message.trim() === "") {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            // Email validation using a regular expression
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert("Please enter a valid email address.");
+                return;
+            }
+
+            // Sanitize the message (you might want to use a more robust sanitizer)
+            var sanitizedMessage = sanitizeHTML(message);
+
+            // Display sanitized message in the alert
+            alert("Hello, " + name + "\n\nSanitized Message:\n" + sanitizedMessage);
+        }
+
+        // Basic HTML sanitizer function
+        function sanitizeHTML(input) {
+            var doc = new DOMParser().parseFromString(input, 'text/html');
+            return doc.body.textContent || "";
+        }
+    </script>
+</body>
+</html>
