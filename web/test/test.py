@@ -8,6 +8,9 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 # Set up Chrome options for headless mode
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('--headless')
+chrome_options.add_argument('--no-sandbox')  # Required when running as root (e.g., in Docker)
+chrome_options.add_argument('--disable-dev-shm-usage')  # Overcome limited resource problems
+chrome_options.add_argument('--disable-gpu')
 
 # Set up the WebDriver with Chrome options
 driver = webdriver.Chrome(options=chrome_options)
