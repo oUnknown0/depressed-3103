@@ -55,8 +55,9 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
+                    sh "export PATH=\$PATH:${python_path}"  // Add python_path to the PATH
                     sh "chmod +x ./web/test/test.py"
-                    sh "python_path ./web/test/test.py"
+                    sh "python ./web/test/test.py"
                 }
             }
         }
