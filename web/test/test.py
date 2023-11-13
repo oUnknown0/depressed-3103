@@ -5,6 +5,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
+class CustomWebDriverException(Exception):
+    pass
+
 # Set up Chrome options for headless mode
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('--headless')
@@ -13,7 +16,6 @@ chrome_options.add_argument('--disable-dev-shm-usage')  # Overcome limited resou
 chrome_options.add_argument('--disable-gpu')
 
 # Set up the WebDriver with Chrome options
-# driver = webdriver.Chrome(options=chrome_options)
 driver = webdriver.Remote(
     command_executor='http://192.168.1.4:4444/wd/hub',
     options=chrome_options
@@ -42,17 +44,15 @@ try:
 
     # Perform assertions to validate the results
     assert 'hello' in success_message.text, "Success message does not contain the expected text."
-    print(f"Message: {str(success_message.text)}")
-
 
 except TimeoutException as te:
-    print(f"Timeout occurred: {str(te)}")
+    raise CustomWebDriverException(f"Timeout occurred: {str(te)}")
 except NoSuchElementException as nse:
-    print(f"Element not found: {str(nse)}")
+    raise CustomWebDriverException(f"Element not found: {str(nse)}")
 except AssertionError as ae:
-    print(f"Assertion error: {str(ae)}")
+    raise CustomWebDriverException(f"Assertion error: {str(ae)}")
 except Exception as e:
-    print(f"An unexpected error occurred: {str(e)}")
+    raise CustomWebDriverException(f"An unexpected error occurred: {str(e)}")
 
 finally:
     # Close the browser
