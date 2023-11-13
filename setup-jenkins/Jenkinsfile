@@ -57,6 +57,7 @@ pipeline {
                 script {
                     sh "pwd"  // Print current working directory
                     sh "ls -la"  // List files in the current directory
+                    sh "chmod +x ./setup-jenkins/test.sh"
                     sh "./setup-jenkins/test.sh"
                 }
             }
