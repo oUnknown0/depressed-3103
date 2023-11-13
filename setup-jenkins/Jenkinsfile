@@ -56,21 +56,11 @@ pipeline {
             steps {
                 script {
                     sh "python3 --version"
+                    sh "pip3 install selenium"  // Add this line to install the 'selenium' module
                     sh "python3 ./web/test/test.py"
                 }
             }
         }
-
-        // stage('Run Tests') {
-        //     steps {
-        //         script {
-        //             sh "pwd"  // Print current working directory
-        //             sh "ls -la"  // List files in the current directory
-        //             sh "chmod +x ./setup-jenkins/test.sh"
-        //             sh "./setup-jenkins/test.sh"
-        //         }
-        //     }
-        // }
 
         // stage('Build, start docker and kill images') {
         //     steps {
