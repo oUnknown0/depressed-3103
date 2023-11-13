@@ -13,7 +13,8 @@ chrome_options.add_argument('--disable-dev-shm-usage')  # Overcome limited resou
 chrome_options.add_argument('--disable-gpu')
 
 # Set up the WebDriver with Chrome options
-driver = webdriver.Chrome(options=chrome_options)
+# driver = webdriver.Chrome(options=chrome_options)
+driver = webdriver.Remote(options=chrome_options)
 
 try:
     # Open the webpage

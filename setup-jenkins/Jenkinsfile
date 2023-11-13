@@ -55,7 +55,6 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    sh "su jenkins"
                     sh "python3 --version"
                     sh "python3 -m pip install selenium --break-system-packages"
                     sh "python3 ./web/test/test.py"
