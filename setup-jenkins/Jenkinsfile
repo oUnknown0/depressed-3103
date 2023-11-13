@@ -55,7 +55,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    sh "/test.sh"
+                    sh "./test.sh"
                 }
             }
         }
