@@ -56,7 +56,7 @@ pipeline {
             steps {
                 script {
                     sh "chmod +x ./web/test/test.py"
-                    sh "./web/test/test.py"
+                    sh "python_path ./web/test/test.py"
                 }
             }
         }
