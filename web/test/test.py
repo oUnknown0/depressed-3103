@@ -4,17 +4,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
-from selenium.webdriver.chrome.service import Service
 
 # Set up Chrome options for headless mode
-# chrome_options = webdriver.ChromeOptions()
-# chrome_options.add_argument('--headless')  # Add other options as needed
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--headless')
 
-# Set the path to Chromedriver explicitly
-# service = Service(executable_path='../chromedriver/chromedriver.exe')
-# service = Service(executable_path='var/jenkins_home/workspace/Jenkins\ CI/chromedriver/chromedriver.exe')
-# driver = webdriver.Chrome(service=service, options=chrome_options)
-driver = webdriver.Chrome()
+# Set up the WebDriver with Chrome options
+driver = webdriver.Chrome(options=chrome_options)
 
 try:
     # Open the webpage
