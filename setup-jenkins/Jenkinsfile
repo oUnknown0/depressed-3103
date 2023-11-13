@@ -52,13 +52,6 @@ pipeline {
             }
         }
 
-        stage('Find Python Installation') {
-            steps {
-                sh "where python"
-                sh "python --version"
-            }
-        }
-
         stage('Run Tests') {
             steps {
                 script {
