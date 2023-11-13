@@ -55,7 +55,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    sh "python web/test/test.py"
+                    sh "/test.sh"
                 }
             }
         }
