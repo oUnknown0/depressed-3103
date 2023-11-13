@@ -55,8 +55,8 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    sh "python --version"
-                    sh "python_path ./web/test/test.py"
+                    sh "python3 --version"
+                    sh "python3 ./web/test/test.py"
                 }
             }
         }
