@@ -8,7 +8,6 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 # Set up Chrome options for headless mode
 chrome_options = Options()
 chrome_options.add_argument('--headless')
-chrome_options.add_argument('--disable-web-security')
 
 # Set up the WebDriver with Chrome options
 driver = webdriver.Chrome(options=chrome_options)
