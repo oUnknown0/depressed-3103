@@ -32,7 +32,7 @@ try:
     )
 
     # Find and interact with elements
-    search_input.send_keys('dawda')
+    search_input.send_keys('hello')
 
     submit_button = driver.find_element(By.ID, 'submit')
     submit_button.click()
