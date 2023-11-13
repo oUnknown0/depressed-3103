@@ -21,17 +21,17 @@ pipeline {
             }
         }
 
-        // stage('OWASP Dependency-Check Vulnerabilities') {
-        //     steps {
-        //         dependencyCheck additionalArguments: '''
-        //                     -o './'
-        //                     -s '../web'
-        //                     -f 'ALL' 
-        //                     --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
+        stage('OWASP Dependency-Check Vulnerabilities') {
+            steps {
+                dependencyCheck additionalArguments: '''
+                            -o './'
+                            -s '../web'
+                            -f 'ALL' 
+                            --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
 
-        //         dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-        //     }
-        // }
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+            }
+        }
 
         stage('Code Quality Check via SonarQube') {
             steps {
@@ -45,7 +45,7 @@ pipeline {
                         -Dsonar.projectKey=OWASP \
                         -Dsonar.sources=. \
                         -Dsonar.host.url=http://sonarqube:9000 \
-                        -Dsonar.login=sqp_a82502141f32082cae463a25dce8890ebe6c1724
+                        -Dsonar.login=sqp_c1330fcab50a4fb349a2da81ceb4ac41a00a5d3b
                         """
                     }
                 }
