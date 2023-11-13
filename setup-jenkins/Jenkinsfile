@@ -56,7 +56,7 @@ pipeline {
             steps {
                 script {
                     sh "python3 --version"
-                    sh "python3 -m pip install selenium"
+                    sh "python3 -m pip3 install selenium"
                     sh "python3 ./web/test/test.py"
                 }
             }
