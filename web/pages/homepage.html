@@ -4,55 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your HTML App</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <!-- <link rel="stylesheet" href="css/styles.css"> -->
+    <style>
+        .error-message {
+            color: red;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello, HTML App! I am here.</h1>
+    <h1>Search Bar</h1>
 
-    <form id="myForm">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
+    <form id="searchForm">
+        <label for="search">Search:</label>
+        <input type="text" id="search" name="search" required>
+        <button type="button" id="submit" onclick="validateAndSubmit()">Submit</button>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" rows="4" required></textarea>
-
-        <button type="button" onclick="validateAndSubmit()">Submit</button>
+        <div id="errorMessages" class="error-message"></div>
     </form>
 
-    <script src="script/script.js"></script>
+    <!-- <script src="script/script.js"></script> -->
     <script>
         function validateAndSubmit() {
-            var name = document.getElementById("name").value;
-            var email = document.getElementById("email").value;
-            var message = document.getElementById("message").value;
+            var search = document.getElementById("search").value;
+            var errorMessagesElement = document.getElementById("errorMessages");
+
+            // Clear previous error messages
+            errorMessagesElement.innerHTML = "";
 
             // Simple validation
-            if (name.trim() === "" || email.trim() === "" || message.trim() === "") {
-                alert("Please fill in all fields.");
+            if (search.trim() === "") {
+                displayErrorMessage("Please enter a search term.");
                 return;
             }
 
-            // Email validation using a regular expression
-            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert("Please enter a valid email address.");
+            // Validate the search term to prevent XSS
+            if (!isValidInput(search)) {
+                displayErrorMessage("Invalid characters in the search term. Please enter a valid search term.");
                 return;
             }
 
-            // Sanitize the message (you might want to use a more robust sanitizer)
-            var sanitizedMessage = sanitizeHTML(message);
+            // You can perform further actions with the 'search' value here.
+            // For now, let's display an alert with the sanitized search term.
+            displaySuccessMessage("Search term: " + sanitizeHTML(search));
+        }
 
-            // Display sanitized message in the alert
-            alert("Hello, " + name + "\n\nSanitized Message:\n" + sanitizedMessage);
+        // Validate input to prevent XSS
+        function isValidInput(input) {
+            // Use a regular expression to allow only alphanumeric characters and spaces
+            var regex = /^[a-zA-Z0-9\s]+$/;
+            return regex.test(input);
         }
 
         // Basic HTML sanitizer function
         function sanitizeHTML(input) {
             var doc = new DOMParser().parseFromString(input, 'text/html');
             return doc.body.textContent || "";
+        }
+
+        // Display error messages
+        function displayErrorMessage(message) {
+            var errorMessagesElement = document.getElementById("errorMessages");
+            errorMessagesElement.innerHTML = "<p id='failure'>" + message + "</p>";
+        }
+
+        // Display success messages
+        function displaySuccessMessage(message) {
+            var errorMessagesElement = document.getElementById("errorMessages");
+            errorMessagesElement.innerHTML = "<p id='success' style='color: green;'>" + message + "</p>";
         }
     </script>
 </body>

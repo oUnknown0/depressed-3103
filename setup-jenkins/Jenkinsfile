@@ -1,7 +1,7 @@
 pipeline {
     agent any
     options {
-        timeout(time:30, unit: 'MINUTES')
+        timeout(time: 30, unit: 'MINUTES')
     }
     environment {
         scannerHome = tool 'SonarQube'
@@ -23,24 +23,22 @@ pipeline {
 
         stage('OWASP Dependency-Check Vulnerabilities') {
             steps {
-                dependencyCheck additionalArguments: ''' 
+                dependencyCheck additionalArguments: '''
                             -o './'
                             -s '../web'
                             -f 'ALL' 
                             --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
-                
+
                 dependencyCheckPublisher pattern: 'dependency-check-report.xml'
             }
         }
 
         stage('Code Quality Check via SonarQube') {
             steps {
-                 script {
-                    // Define SonarQube Scanner
+                script {
                     def sonarScannerHome = tool 'SonarQube';
                     env.PATH = "${sonarScannerHome}/bin:${env.PATH}"
 
-                    // Execute SonarQube analysis
                     withSonarQubeEnv('SonarQube') {
                         sh """
                         sonar-scanner \
@@ -54,18 +52,24 @@ pipeline {
             }
         }
 
-        stage('Build, start docker and kill images'){
+        stage('Run Tests') {
             steps {
-                sh "dockerd &"
-                sh "docker --version"
-                sh "docker-compose -f setup-jenkins/docker-compose.yml down"
-                sh "docker-compose -f setup-jenkins/docker-compose.yml build"
-                sh "docker-compose -f setup-jenkins/docker-compose.yml up -d"
-                sh "docker ps"
-                sh "docker-compose -f setup-jenkins/docker-compose.yml down"
+                script {
+                    sh "python test.py"
+                }
             }
         }
-    } 
+
+        // stage('Build, start docker and kill images') {
+        //     steps {
+        //         sh "dockerd &"
+        //         sh "docker --version"
+        //         sh "docker-compose -f setup-jenkins/docker-compose.yml down"
+        //         sh "docker-compose -f setup-jenkins/docker-compose.yml build"
+        //         sh "docker-compose -f setup-jenkins/docker-compose.yml up -d"
+        //         sh "docker ps"
+        //         sh "docker-compose -f setup-jenkins/docker-compose.yml down"
+        //     }
+        // }
+    }
 }
-
-

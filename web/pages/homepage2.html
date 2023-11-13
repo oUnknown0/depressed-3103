@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+</head>
+<body>
+    <div>
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="button" onclick="validateLogin()">Login</button>
+        </form>
+    </div>
+
+    <script>
+        function validateLogin() {
+            var password = document.getElementById("password").value;
+
+            // Simple validation
+            if (password.trim() === "") {
+                alert("Please enter your password.");
+                return;
+            }
+
+            // Perform further actions, such as sending the password to a server for authentication
+            alert("Login successful!");
+        }
+    </script>
+</body>
+</html>
