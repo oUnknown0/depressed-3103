@@ -14,7 +14,8 @@ driver = webdriver.Chrome(options=chrome_options)
 
 try:
     # Open the webpage
-    driver.get('http://127.0.0.1:5500/web/pages/homepage.html')
+    driver.get('http://192.168.1.4:5500/web/pages/homepage.html')
+    # driver.get('www.google.com')
 
     # Explicit wait for the search input
     search_input = WebDriverWait(driver, 10).until(
