@@ -55,6 +55,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
+                    sh "chmod +x ./web/test/test.py"
                     sh "./web/test/test.py"
                 }
             }
