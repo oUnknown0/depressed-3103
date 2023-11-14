@@ -46,6 +46,7 @@
             // You can perform further actions with the 'search' value here.
             // For now, let's display an alert with the sanitized search term.
             displaySuccessMessage("Search term: " + sanitizeHTML(search));
+            window.location.href = 'nextpage.html?search=' + encodeURIComponent(search);
         }
 
         // Validate input to prevent XSS

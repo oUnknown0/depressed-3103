@@ -44,7 +44,7 @@ pipeline {
                         sonar-scanner \
                         -Dsonar.projectKey=OWASP \
                         -Dsonar.sources=. \
-                        -Dsonar.host.url=http://192.168.1.4:9000 \
+                        -Dsonar.host.url=http://sonarqube:9000 \
                         -Dsonar.login=sqp_c1330fcab50a4fb349a2da81ceb4ac41a00a5d3b
                         """
                     }
@@ -57,7 +57,7 @@ pipeline {
                 script {
                     sh "python3 --version"
                     sh "python3 -m pip install selenium --break-system-packages"
-                    sh "python3 ./web/test/test.py"
+                    sh "python3 ./web/test/testtest1.py"
                 }
             }
         }

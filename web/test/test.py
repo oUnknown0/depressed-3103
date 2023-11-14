@@ -113,6 +113,15 @@ try:
     # Perform assertions to validate the results
     assert 'Invalid characters in the search term. Please enter a valid search term.' in success_message.text, "Failure message does not contain the expected text."
     print("XSS Attack Test:", success_message.text)
+    
+except TimeoutException as te:
+    raise CustomWebDriverException(f"Timeout occurred: {str(te)}")
+except NoSuchElementException as nse:
+    raise CustomWebDriverException(f"Element not found: {str(nse)}")
+except AssertionError as ae:
+    raise CustomWebDriverException(f"Assertion error: {str(ae)}")
+except Exception as e:
+    raise CustomWebDriverException(f"An unexpected error occurred: {str(e)}")
 
 finally:
     # Close the browser
